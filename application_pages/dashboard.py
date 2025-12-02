@@ -37,7 +37,6 @@ def train_logistic_regression_model(X_train, y_train, random_state=42):
     model.fit(X_train, y_train)
     return model
 
-@st.cache_data(ttl="2h")
 def predict_with_model(model, X_data):
     return model.predict(X_data)
 
