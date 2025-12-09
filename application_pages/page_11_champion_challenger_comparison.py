@@ -51,6 +51,7 @@ def on_compare_clicked():
 def on_promote_clicked():
     if st.session_state.challenger_model is not None:
         st.session_state.champion_model = st.session_state.challenger_model
+        st.session_state.champion_model_name = "Challenger Model (Promoted)" # Update sidebar status
         st.success("Challenger Model successfully promoted to become the new Champion!")
         st.info("Monitoring will now continue with the new Champion model. Historical monitoring data has been reset to reflect a fresh start.")
         
@@ -84,4 +85,24 @@ def main():
     )
 
     if st.session_state.get('challenger_model') is None:
-        st.warning("Please train the Challenger Model on the 
+        st.warning("Please train the Challenger Model on the 'Retraining a Challenger' page first to proceed with the comparison.")
+        return
+
+    st.button("Compare Champion vs. Challenger", on_click=on_compare_clicked, disabled=not st.session_state.get('compare_button_enabled', False))
+
+    if st.session_state.get('compare_results_displayed', False):
+        st.markdown("
+        \nAnalysis: Observe how the Challenger model performs against the Champion model on recent, potentially drifted data. A superior Challenger is a candidate for promotion.
+        ")
+        st.plotly_chart(st.session_state.fig_perf_comp, use_container_width=True)
+        st.plotly_chart(st.session_state.fig_drift_comp, use_container_width=True)
+
+        st.markdown(
+            """
+            The comparison plots provide a clear overview. If the Challenger demonstrates superior performance, especially on the data where the Champion struggled, it indicates that retraining has been effective. Your final decision as a Risk Manager is to authorize its promotion to production.
+            """
+        )
+
+        st.button("Promote Challenger to Champion", on_click=on_promote_clicked, disabled=not st.session_state.get('promote_button_enabled', False))
+    else:
+        st.info("Click 
