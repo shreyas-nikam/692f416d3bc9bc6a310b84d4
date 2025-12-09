@@ -91,9 +91,7 @@ def main():
     st.button("Compare Champion vs. Challenger", on_click=on_compare_clicked, disabled=not st.session_state.get('compare_button_enabled', False))
 
     if st.session_state.get('compare_results_displayed', False):
-        st.markdown("
-        \nAnalysis: Observe how the Challenger model performs against the Champion model on recent, potentially drifted data. A superior Challenger is a candidate for promotion.
-        ")
+        st.markdown("\nAnalysis: Observe how the Challenger model performs against the Champion model on recent, potentially drifted data. A superior Challenger is a candidate for promotion.")
         st.plotly_chart(st.session_state.fig_perf_comp, use_container_width=True)
         st.plotly_chart(st.session_state.fig_drift_comp, use_container_width=True)
 
@@ -105,4 +103,8 @@ def main():
 
         st.button("Promote Challenger to Champion", on_click=on_promote_clicked, disabled=not st.session_state.get('promote_button_enabled', False))
     else:
-        st.info("Click 
+        st.info("Click the 'Compare Champion vs. Challenger' button to evaluate the models.")
+
+    if st.button("Proceed to Human-in-the-Loop & Governance"):
+        st.session_state.current_page = "Human-in-the-Loop & Governance"
+        st.rerun()
