@@ -1,5 +1,0 @@
-[server]
-port = 8588
-baseUrlPath = "692f416d3bc9bc6a310b84d4"
-enableCORS = false
-enableXsrfProtection = false
